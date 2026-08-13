@@ -1,0 +1,10 @@
+{
+  "description": "Offers a curated collection of unique digital art and design resources for creatives seeking inspiration and innovative visual content.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
