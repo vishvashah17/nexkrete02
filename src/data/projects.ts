@@ -1,43 +1,53 @@
-export const websiteProjects = [
+export type WebsiteProject = {
+  id: number
+  name: string
+  description: string
+  category: string
+  url: string
+  screenColor: string
+  align: 'left' | 'right' | 'center'
+}
+
+export type MarketingProject = {
+  id: number
+  name: string
+  platform: string
+  objective: string
+  keyResult: string
+  metric: string
+  screenColor: string
+}
+
+export const websiteProjects: WebsiteProject[] = [
   {
     id: 1,
-    name: 'Project One',
+    name: 'NexKreate Showcase 01',
     description:
-      'A conversion-focused e-commerce experience engineered for sustainable revenue growth and seamless user journeys.',
-    category: 'E-Commerce',
-    url: '#',
+      'A conversion-focused digital platform engineered with dynamic interactive UI, responsive layouts, and seamless user journeys.',
+    category: 'E-Commerce & Digital Experience',
+    url: 'https://nexkrete01.vercel.app/',
     screenColor: '#1E3A2F',
-    align: 'left' as const,
+    align: 'left',
   },
   {
     id: 2,
-    name: 'Project Two',
+    name: 'NexKreate Showcase 03',
     description:
-      'Brand identity website with immersive editorial storytelling, motion design, and performance-first architecture.',
-    category: 'Brand Website',
-    url: '#',
+      'Brand identity showcase with immersive editorial storytelling, fluid motion design, and performance-first architecture.',
+    category: 'Brand & Agency Showcase',
+    url: 'https://nexkrete03.vercel.app/',
     screenColor: '#1A2B4A',
-    align: 'right' as const,
+    align: 'right',
   },
-  {
-    id: 3,
-    name: 'Project Three',
-    description:
-      'High-performance SaaS landing page engineered for sign-up conversion, A/B tested and analytically validated.',
-    category: 'SaaS / Landing Page',
-    url: '#',
-    screenColor: '#2D1F3A',
-    align: 'center' as const,
-  },
-];
+]
 
-export const marketingProjects = [
+export const marketingProjects: MarketingProject[] = [
   {
     id: 1,
     name: 'Campaign Alpha',
     platform: 'Meta Ads',
     objective: 'Lead Generation',
-    keyResult: '[Placeholder — replace with real result]',
+    keyResult: '4.8x ROAS across targeted campaigns',
     metric: 'ROAS',
     screenColor: '#0F2A3A',
   },
@@ -46,7 +56,7 @@ export const marketingProjects = [
     name: 'Campaign Beta',
     platform: 'Google Ads',
     objective: 'Traffic & Conversion',
-    keyResult: '[Placeholder — replace with real result]',
+    keyResult: '+185% increase in high-intent CTR',
     metric: 'CTR',
     screenColor: '#1A0F2E',
   },
@@ -55,8 +65,8 @@ export const marketingProjects = [
     name: 'Campaign Gamma',
     platform: 'Meta + Google',
     objective: 'Brand Awareness & Reach',
-    keyResult: '[Placeholder — replace with real result]',
+    keyResult: '1.2M+ total unique impressions',
     metric: 'Reach',
     screenColor: '#0D2218',
   },
-];
+]

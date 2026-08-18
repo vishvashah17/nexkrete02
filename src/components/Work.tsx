@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { websiteProjects, marketingProjects } from '../data/projects'
+import { websiteProjects, marketingProjects, WebsiteProject, MarketingProject } from '../data/projects'
 
 function useInView() {
   const ref = useRef<HTMLDivElement>(null)
@@ -17,77 +17,126 @@ function useInView() {
   return { ref, inView }
 }
 
-function LaptopFrame({ color }: { color: string }) {
+function LaptopFrame({ color, url, title }: { color: string; url?: string; title?: string }) {
   return (
-    <div className="relative w-full select-none" style={{ paddingBottom: '63%' }} aria-hidden="true">
+    <div className="relative w-full select-none" style={{ paddingBottom: '63%' }}>
       {/* Screen body */}
       <div
-        className="absolute top-0 rounded-t-xl overflow-hidden"
+        className="absolute top-0 rounded-t-xl overflow-hidden shadow-2xl border border-black/10"
         style={{ left: '4%', right: '4%', height: '87%', backgroundColor: '#1C1C1C', padding: '3px 3px 0' }}
       >
         <div
-          className="w-full h-full rounded-t-lg overflow-hidden"
+          className="w-full h-full rounded-t-lg overflow-hidden flex flex-col relative"
           style={{ background: `linear-gradient(140deg, ${color} 0%, #080808 100%)` }}
         >
           {/* Browser bar */}
           <div
-            className="flex items-center gap-1.5 px-3"
-            style={{ height: '22px', backgroundColor: 'rgba(0,0,0,0.4)' }}
+            className="flex items-center justify-between px-3 z-20 flex-shrink-0"
+            style={{ height: '28px', backgroundColor: 'rgba(20,20,20,0.95)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
           >
-            <div className="w-2 h-2 rounded-full bg-red-400 opacity-60" />
-            <div className="w-2 h-2 rounded-full bg-yellow-400 opacity-60" />
-            <div className="w-2 h-2 rounded-full bg-green-400 opacity-60" />
-            <div className="flex-1 ml-3 h-2.5 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
-          </div>
-          {/* Placeholder screen content */}
-          <div className="p-5">
-            <div className="h-4 rounded w-1/3 mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }} />
-            <div className="h-2.5 rounded w-2/3 mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
-            <div className="h-2.5 rounded w-1/2 mb-6" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
-            <div className="rounded mb-3" style={{ height: '60px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
-            <div className="grid grid-cols-3 gap-2">
-              {[1, 2, 3].map((k) => (
-                <div key={k} className="rounded" style={{ height: '40px', backgroundColor: 'rgba(255,255,255,0.05)' }} />
-              ))}
+            <div className="flex items-center gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
             </div>
+            {url && url !== '#' && (
+              <div
+                className="flex items-center justify-center gap-1.5 px-3 py-0.5 rounded text-[11px] text-gray-300 max-w-[65%] truncate font-mono"
+                style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+              >
+                <span className="text-[10px] text-emerald-400">🔒</span>
+                <span className="truncate">{url.replace('https://', '').replace(/\/$/, '')}</span>
+              </div>
+            )}
+            {url && url !== '#' ? (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-[11px] text-[#C9A84C] hover:underline flex items-center gap-1 transition-opacity hover:opacity-100 opacity-80"
+              >
+                <span>Live</span>
+                <span>↗</span>
+              </a>
+            ) : (
+              <div className="w-10" />
+            )}
+          </div>
+
+          {/* Screen Content: Live Website Iframe */}
+          <div className="relative flex-1 w-full h-full overflow-hidden bg-white">
+            {url && url !== '#' ? (
+              <iframe
+                src={url}
+                title={title || 'Live Website Preview'}
+                className="w-full h-full border-0 select-auto"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              />
+            ) : (
+              <div className="p-5 h-full" style={{ background: `linear-gradient(140deg, ${color} 0%, #080808 100%)` }}>
+                <div className="h-4 rounded w-1/3 mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }} />
+                <div className="h-2.5 rounded w-2/3 mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
+                <div className="h-2.5 rounded w-1/2 mb-6" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
+                <div className="rounded mb-3" style={{ height: '60px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+                <div className="grid grid-cols-3 gap-2">
+                  {[1, 2, 3].map((k) => (
+                    <div key={k} className="rounded" style={{ height: '40px', backgroundColor: 'rgba(255,255,255,0.05)' }} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
       {/* Base */}
       <div
-        className="absolute bottom-0 rounded-b"
+        className="absolute bottom-0 rounded-b shadow-md"
         style={{ left: 0, right: 0, height: '6%', backgroundColor: '#2E2E2E' }}
       />
       <div
-        className="absolute bottom-0"
+        className="absolute bottom-0 rounded-b-sm"
         style={{ left: '28%', right: '28%', height: '2.5%', backgroundColor: '#3D3D3D' }}
       />
     </div>
   )
 }
 
-function PhoneFrame({ color }: { color: string }) {
+function PhoneFrame({ color, url, title }: { color: string; url?: string; title?: string }) {
   return (
     <div
-      className="relative rounded-[28px] overflow-hidden select-none"
-      style={{ width: '38%', aspectRatio: '9/18', border: '5px solid #2E2E2E', flexShrink: 0 }}
-      aria-hidden="true"
+      className="relative rounded-[28px] overflow-hidden shadow-2xl z-20 flex flex-col bg-black border-[5px] border-[#2E2E2E]"
+      style={{ width: '38%', aspectRatio: '9/18', flexShrink: 0 }}
     >
+      {/* Dynamic Notch */}
       <div
-        className="absolute inset-0"
-        style={{ background: `linear-gradient(160deg, ${color} 0%, #080808 100%)` }}
-      />
-      {/* Notch */}
-      <div
-        className="absolute top-3 left-1/2 -translate-x-1/2 rounded-full"
-        style={{ width: '40%', height: '14px', backgroundColor: '#0e0e0e' }}
-      />
-      <div className="absolute inset-0 pt-10 px-3 opacity-35">
-        <div className="h-3 rounded w-2/3 mx-auto mb-3" style={{ backgroundColor: 'rgba(255,255,255,0.7)' }} />
-        <div className="h-2 rounded w-1/2 mx-auto mb-6" style={{ backgroundColor: 'rgba(255,255,255,0.4)' }} />
-        <div className="h-16 rounded mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }} />
-        <div className="h-10 rounded mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
-        <div className="h-10 rounded" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
+        className="absolute top-2 left-1/2 -translate-x-1/2 rounded-full z-30 flex items-center justify-center gap-1.5"
+        style={{ width: '35%', height: '12px', backgroundColor: '#0e0e0e' }}
+      >
+        <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+        <div className="w-1 h-1 rounded-full bg-blue-500/40" />
+      </div>
+
+      {/* Screen Content */}
+      <div className="relative w-full h-full pt-5 bg-white overflow-hidden">
+        {url && url !== '#' ? (
+          <iframe
+            src={url}
+            title={title ? `${title} Mobile Preview` : 'Mobile Live Preview'}
+            className="w-full h-full border-0 select-auto"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          />
+        ) : (
+          <div className="h-full pt-6 px-3" style={{ background: `linear-gradient(160deg, ${color} 0%, #080808 100%)` }}>
+            <div className="h-3 rounded w-2/3 mx-auto mb-3" style={{ backgroundColor: 'rgba(255,255,255,0.7)' }} />
+            <div className="h-2 rounded w-1/2 mx-auto mb-6" style={{ backgroundColor: 'rgba(255,255,255,0.4)' }} />
+            <div className="h-16 rounded mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }} />
+            <div className="h-10 rounded mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
+            <div className="h-10 rounded" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
+          </div>
+        )}
       </div>
     </div>
   )
@@ -97,7 +146,7 @@ function WebsiteProjectCard({
   project,
   index,
 }: {
-  project: typeof websiteProjects[0]
+  project: WebsiteProject
   index: number
 }) {
   const { ref, inView } = useInView()
@@ -117,18 +166,23 @@ function WebsiteProjectCard({
       {isFull ? (
         /* Full-width composition */
         <div>
-          <div className="group cursor-pointer" onClick={() => window.open(project.url, '_blank')}>
+          <div className="group">
             <div className="flex items-end gap-6 transition-transform duration-500 group-hover:scale-[1.01]">
               <div className="flex-1">
-                <LaptopFrame color={project.screenColor} />
+                <LaptopFrame color={project.screenColor} url={project.url} title={project.name} />
               </div>
-              <PhoneFrame color={project.screenColor} />
+              <PhoneFrame color={project.screenColor} url={project.url} title={project.name} />
             </div>
-            <div className="mt-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span className="text-[#C9A84C]" style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
-                View Website
-              </span>
-              <span className="text-[#C9A84C] text-xs">↗</span>
+            <div className="mt-3 flex items-center justify-between">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[#C9A84C] hover:underline"
+                style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
+              >
+                Open {project.name} in New Tab ↗
+              </a>
             </div>
           </div>
           <div className="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -159,7 +213,7 @@ function WebsiteProjectCard({
                 className="inline-flex items-center gap-2 border-b border-[#131313] pb-0.5 transition-all duration-200 hover:gap-4 hover:border-[#C9A84C] hover:text-[#C9A84C]"
                 style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
               >
-                View Project ↗
+                Visit Live Site ↗
               </a>
             </div>
           </div>
@@ -168,15 +222,20 @@ function WebsiteProjectCard({
         /* Alternating left/right layout */
         <div className={`flex flex-col ${isRight ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-10 md:gap-16`}>
           {/* Mockup */}
-          <div className="w-full md:w-[58%] group cursor-pointer flex-shrink-0" onClick={() => window.open(project.url, '_blank')}>
-            <div className="transition-transform duration-500 group-hover:scale-[1.02]">
-              <LaptopFrame color={project.screenColor} />
+          <div className="w-full md:w-[58%] group flex-shrink-0">
+            <div className="transition-transform duration-500 group-hover:scale-[1.01]">
+              <LaptopFrame color={project.screenColor} url={project.url} title={project.name} />
             </div>
-            <div className="mt-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span className="text-[#C9A84C]" style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
-                View Website
-              </span>
-              <span className="text-[#C9A84C] text-xs">↗</span>
+            <div className="mt-3 flex items-center justify-between">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[#C9A84C] hover:underline"
+                style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
+              >
+                Open {project.name} in New Tab ↗
+              </a>
             </div>
           </div>
 
@@ -207,7 +266,7 @@ function WebsiteProjectCard({
               className="inline-flex items-center gap-2 border-b border-[#131313] pb-0.5 transition-all duration-200 hover:gap-4 hover:border-[#C9A84C] hover:text-[#C9A84C]"
               style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
             >
-              View Project ↗
+              Visit Live Site ↗
             </a>
           </div>
         </div>
@@ -216,7 +275,7 @@ function WebsiteProjectCard({
   )
 }
 
-function MarketingProjectCard({ project, index }: { project: typeof marketingProjects[0]; index: number }) {
+function MarketingProjectCard({ project, index }: { project: MarketingProject; index: number }) {
   const { ref, inView } = useInView()
 
   const chartBars = [38, 55, 42, 72, 48, 88, 64, 80, 55, 92, 70, 85]
