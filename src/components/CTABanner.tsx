@@ -48,11 +48,12 @@ export default function CTABanner() {
 
       <div
         ref={ref}
-        className="max-w-[1440px] mx-auto relative z-10 transition-all duration-800"
+        className="max-w-[1440px] mx-auto relative z-10 transition-all"
         style={{
           padding: '0 clamp(1.5rem, 5vw, 4rem)',
           opacity: inView ? 1 : 0,
-          transform: inView ? 'translateY(0)' : 'translateY(32px)',
+          transform: inView ? 'translateY(0)' : 'translateY(36px)',
+          transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
         <div className="max-w-[900px]">

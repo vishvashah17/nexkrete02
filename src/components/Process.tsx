@@ -42,8 +42,12 @@ export default function Process() {
         {/* Header */}
         <div
           ref={headerRef}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24 transition-all duration-700"
-          style={{ opacity: headerInView ? 1 : 0, transform: headerInView ? 'translateY(0)' : 'translateY(24px)' }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24 transition-all"
+          style={{
+            opacity: headerInView ? 1 : 0,
+            transform: headerInView ? 'translateY(0)' : 'translateY(36px)',
+            transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
         >
           <div>
             <span
@@ -90,8 +94,12 @@ export default function Process() {
         {/* Timeline layout */}
         <div
           ref={timelineRef}
-          className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-0 md:gap-20 transition-all duration-700"
-          style={{ opacity: timelineInView ? 1 : 0, transform: timelineInView ? 'translateY(0)' : 'translateY(28px)' }}
+          className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-0 md:gap-20 transition-all"
+          style={{
+            opacity: timelineInView ? 1 : 0,
+            transform: timelineInView ? 'translateY(0)' : 'translateY(36px)',
+            transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
         >
           {/* Left: step list */}
           <div className="relative">

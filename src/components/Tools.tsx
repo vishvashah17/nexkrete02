@@ -24,8 +24,12 @@ function WebsiteCategoryBlock({ category, tools, delay }: { category: string; to
   return (
     <div
       ref={ref}
-      className="transition-all duration-700"
-      style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(20px)' }}
+      className="transition-all"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(28px)',
+        transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+      }}
     >
       <div
         className="flex items-center gap-3 mb-5"
@@ -62,11 +66,12 @@ function MarketingCategoryBlock({ category, tools, delay }: { category: string; 
   return (
     <div
       ref={ref}
-      className="border-t py-10 transition-all duration-700"
+      className="border-t py-10 transition-all"
       style={{
         borderColor: 'rgba(245,242,237,0.07)',
         opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(20px)',
+        transform: inView ? 'translateY(0)' : 'translateY(28px)',
+        transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
       <div className="flex flex-col md:flex-row md:items-baseline gap-6 md:gap-12">
@@ -112,8 +117,12 @@ export default function Tools() {
         {/* Header */}
         <div
           ref={headerRef}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-20 transition-all duration-700"
-          style={{ opacity: headerInView ? 1 : 0, transform: headerInView ? 'translateY(0)' : 'translateY(24px)' }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-20 transition-all"
+          style={{
+            opacity: headerInView ? 1 : 0,
+            transform: headerInView ? 'translateY(0)' : 'translateY(36px)',
+            transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
         >
           <div>
             <span

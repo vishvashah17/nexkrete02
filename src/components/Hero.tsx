@@ -62,8 +62,8 @@ export default function Hero() {
 
   const reveal = (delay: number) => ({
     opacity: loaded ? 1 : 0,
-    transform: loaded ? 'translateY(0)' : 'translateY(28px)',
-    transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`,
+    transform: loaded ? 'translateY(0)' : 'translateY(36px)',
+    transition: `opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
   })
 
   return (
@@ -72,6 +72,16 @@ export default function Hero() {
       style={{ backgroundColor: '#F5F2ED' }}
       aria-label="Hero"
     >
+      {/* Light Gold Grid Background with Vignette Fade */}
+      <div
+        className="absolute inset-0 bg-grid-gold pointer-events-none select-none"
+        style={{
+          maskImage: 'radial-gradient(ellipse 75% 70% at 50% 45%, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 90%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 50% 45%, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 90%)',
+        }}
+        aria-hidden="true"
+      />
+
       {/* Subtle decorative elements */}
       <div
         className="absolute top-[18%] right-[8%] hidden lg:block pointer-events-none select-none"

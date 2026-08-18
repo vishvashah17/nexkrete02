@@ -107,8 +107,12 @@ function WebsiteProjectCard({
   return (
     <div
       ref={ref}
-      className="transition-all duration-700"
-      style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(40px)' }}
+      className="transition-all"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(40px)',
+        transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+      }}
     >
       {isFull ? (
         /* Full-width composition */
@@ -220,12 +224,12 @@ function MarketingProjectCard({ project, index }: { project: typeof marketingPro
   return (
     <div
       ref={ref}
-      className="border transition-all duration-700"
+      className="border transition-all"
       style={{
         borderColor: 'rgba(19,19,19,0.08)',
         opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(32px)',
-        transitionDelay: `${index * 80}ms`,
+        transform: inView ? 'translateY(0)' : 'translateY(36px)',
+        transition: `opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) ${index * 120}ms, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) ${index * 120}ms`,
       }}
     >
       <div className="grid md:grid-cols-[55%_1fr]">
@@ -327,8 +331,12 @@ export default function Work() {
         {/* Header */}
         <div
           ref={headerRef}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24 transition-all duration-700"
-          style={{ opacity: headerInView ? 1 : 0, transform: headerInView ? 'translateY(0)' : 'translateY(24px)' }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24 transition-all"
+          style={{
+            opacity: headerInView ? 1 : 0,
+            transform: headerInView ? 'translateY(0)' : 'translateY(36px)',
+            transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
         >
           <div>
             <span

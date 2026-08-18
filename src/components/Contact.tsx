@@ -128,11 +128,12 @@ export default function Contact() {
     >
       <div
         ref={ref}
-        className="max-w-[1440px] mx-auto transition-all duration-700"
+        className="max-w-[1440px] mx-auto transition-all"
         style={{
           padding: '0 clamp(1.5rem, 5vw, 4rem)',
           opacity: inView ? 1 : 0,
-          transform: inView ? 'translateY(0)' : 'translateY(28px)',
+          transform: inView ? 'translateY(0)' : 'translateY(36px)',
+          transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
         <div className="grid md:grid-cols-2 gap-12 md:gap-24">

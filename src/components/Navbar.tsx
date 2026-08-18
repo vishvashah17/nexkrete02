@@ -23,15 +23,26 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      setMenuOpen(false)
+      const target = document.querySelector(href)
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
   return (
     <>
       <nav
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          backgroundColor: scrolled ? 'rgba(245,242,237,0.94)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(14px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(14px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(19,19,19,0.07)' : '1px solid transparent',
+          backgroundColor: scrolled ? 'rgba(245,242,237,0.92)' : 'rgba(245,242,237,0.72)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: scrolled ? '1px solid rgba(19,19,19,0.09)' : '1px solid rgba(19,19,19,0.05)',
         }}
         aria-label="Main navigation"
       >
@@ -55,6 +66,7 @@ export default function Navbar() {
               <a
                 key={label}
                 href={href}
+                onClick={(e) => handleNavClick(e, href)}
                 role="listitem"
                 className="text-[#131313] transition-colors duration-200 hover:text-[#C9A84C]"
                 style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
@@ -68,6 +80,7 @@ export default function Navbar() {
           <div className="flex items-center gap-5">
             <a
               href="#contact"
+              onClick={(e) => handleNavClick(e, '#contact')}
               className="hidden md:inline-flex items-center gap-2 text-[#131313] border border-[#131313] transition-all duration-250 hover:bg-[#131313] hover:text-[#F5F2ED] group"
               style={{
                 fontFamily: 'var(--font-body)',
@@ -130,7 +143,7 @@ export default function Navbar() {
             <a
               key={label}
               href={href}
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, href)}
               className="text-[#F5F2ED] border-b border-white/8 py-7 flex items-center justify-between group hover:text-[#C9A84C] transition-colors duration-200"
               style={{
                 fontFamily: 'var(--font-display)',
