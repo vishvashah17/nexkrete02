@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-
+import video1 from '../assets/video1.mp4'
 const WORDS = ['Websites', 'Campaigns']
 
 function useCountUp(target: number, duration = 1800) {
@@ -79,7 +79,7 @@ export default function Hero() {
           loop 
           muted 
           playsInline
-          src="/video1.mp4"
+          src={video1}
         />
         {/* Semi-transparent overlay to ensure text remains readable */}
         <div className="absolute inset-0 bg-[#F5F2ED]/0" />
