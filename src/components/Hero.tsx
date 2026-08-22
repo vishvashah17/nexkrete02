@@ -69,12 +69,25 @@ export default function Hero() {
   return (
     <section
       className="relative min-h-screen flex flex-col overflow-hidden"
-      style={{ backgroundColor: '#F5F2ED' }}
       aria-label="Hero"
     >
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
+        <video 
+          className="w-full h-full object-cover"
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          src="/video1.mp4"
+        />
+        {/* Semi-transparent overlay to ensure text remains readable */}
+        <div className="absolute inset-0 bg-[#F5F2ED]/0" />
+      </div>
+
       {/* Light Gold Grid Background with Vignette Fade */}
       <div
-        className="absolute inset-0 bg-grid-gold pointer-events-none select-none"
+        className="absolute inset-0 z-0 bg-grid-gold pointer-events-none select-none"
         style={{
           maskImage: 'radial-gradient(ellipse 75% 70% at 50% 45%, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 90%)',
           WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 50% 45%, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 90%)',
@@ -119,7 +132,7 @@ export default function Hero() {
 
       {/* Main content */}
       <div
-        className="max-w-[1440px] mx-auto w-full flex-1 flex flex-col justify-center"
+        className="relative z-10 max-w-[1440px] mx-auto w-full flex-1 flex flex-col justify-center"
         style={{ padding: 'clamp(6rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem) clamp(2rem, 4vw, 4rem)' }}
       >
         {/* Eyebrow */}
@@ -221,7 +234,7 @@ export default function Hero() {
 
       {/* Stats strip */}
       <div
-        className="border-t w-full"
+        className="relative z-10 border-t w-full"
         style={{
           borderColor: 'rgba(19,19,19,0.09)',
           ...reveal(600),
