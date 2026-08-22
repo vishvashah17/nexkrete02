@@ -17,9 +17,10 @@ function useInView() {
   return { ref, inView }
 }
 
-function LaptopFrame({ color, url, title }: { color: string; url?: string; title?: string }) {
+function LaptopFrame({ color, url, title, interactive = false }: { color: string; url?: string; title?: string; interactive?: boolean }) {
   return (
     <div className="relative w-full select-none" style={{ paddingBottom: '63%' }}>
+      {!interactive && <div className="absolute inset-0 z-50 cursor-pointer" />}
       {/* Screen body */}
       <div
         className="absolute top-0 rounded-t-xl overflow-hidden shadow-2xl border border-black/10"
@@ -103,12 +104,13 @@ function LaptopFrame({ color, url, title }: { color: string; url?: string; title
   )
 }
 
-function PhoneFrame({ color, url, title }: { color: string; url?: string; title?: string }) {
+function PhoneFrame({ color, url, title, width = '38%', interactive = false }: { color: string; url?: string; title?: string; width?: string; interactive?: boolean }) {
   return (
     <div
       className="relative rounded-[28px] overflow-hidden shadow-2xl z-20 flex flex-col bg-black border-[5px] border-[#2E2E2E]"
-      style={{ width: '38%', aspectRatio: '9/18', flexShrink: 0 }}
+      style={{ width, aspectRatio: '9/18', flexShrink: 0 }}
     >
+      {!interactive && <div className="absolute inset-0 z-50 cursor-pointer" />}
       {/* Dynamic Notch */}
       <div
         className="absolute top-2 left-1/2 -translate-x-1/2 rounded-full z-30 flex items-center justify-center gap-1.5"
@@ -145,9 +147,11 @@ function PhoneFrame({ color, url, title }: { color: string; url?: string; title?
 function WebsiteProjectCard({
   project,
   index,
+  onOpen,
 }: {
   project: WebsiteProject
   index: number
+  onOpen: () => void
 }) {
   const { ref, inView } = useInView()
   const isRight = project.align === 'right'
@@ -156,7 +160,8 @@ function WebsiteProjectCard({
   return (
     <div
       ref={ref}
-      className="transition-all"
+      className="transition-all cursor-pointer group/card"
+      onClick={onOpen}
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? 'translateY(0)' : 'translateY(40px)',
@@ -178,6 +183,7 @@ function WebsiteProjectCard({
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-2 text-[#C9A84C] hover:underline"
                 style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
               >
@@ -210,6 +216,7 @@ function WebsiteProjectCard({
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-2 border-b border-[#131313] pb-0.5 transition-all duration-200 hover:gap-4 hover:border-[#C9A84C] hover:text-[#C9A84C]"
                 style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
               >
@@ -231,6 +238,7 @@ function WebsiteProjectCard({
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-2 text-[#C9A84C] hover:underline"
                 style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.16em', textTransform: 'uppercase' }}
               >
@@ -380,12 +388,52 @@ function MarketingProjectCard({ project, index }: { project: MarketingProject; i
   )
 }
 
+function ProjectModal({ project, onClose }: { project: WebsiteProject | null; onClose: () => void }) {
+  useEffect(() => {
+    if (project) {
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = '' }
+    }
+  }, [project])
+
+  if (!project) return null
+
+  return (
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-10" 
+      onClick={onClose}
+    >
+      <button 
+        className="absolute top-4 right-4 md:top-8 md:right-8 text-white hover:text-[#C9A84C] transition-colors z-50 p-2"
+        onClick={onClose}
+        aria-label="Close interactive view"
+      >
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Desktop view: Laptop Frame */}
+      <div className="hidden md:block w-full max-w-6xl" onClick={e => e.stopPropagation()}>
+        <LaptopFrame color={project.screenColor} url={project.url} title={project.name} interactive />
+      </div>
+
+      {/* Mobile view: Phone Frame */}
+      <div className="block md:hidden w-full max-w-[360px]" onClick={e => e.stopPropagation()}>
+        <PhoneFrame color={project.screenColor} url={project.url} title={project.name} width="100%" interactive />
+      </div>
+    </div>
+  )
+}
+
 export default function Work() {
   const [tab, setTab] = useState<'website' | 'marketing'>('website')
+  const [activeProject, setActiveProject] = useState<WebsiteProject | null>(null)
   const { ref: headerRef, inView: headerInView } = useInView()
 
   return (
     <section id="work" style={{ backgroundColor: '#F5F2ED', padding: 'clamp(5rem, 10vw, 10rem) 0' }}>
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
       <div className="max-w-[1440px] mx-auto" style={{ padding: '0 clamp(1.5rem, 5vw, 4rem)' }}>
         {/* Header */}
         <div
@@ -443,7 +491,7 @@ export default function Work() {
         {tab === 'website' && (
           <div className="space-y-28 md:space-y-36">
             {websiteProjects.map((project, i) => (
-              <WebsiteProjectCard key={project.id} project={project} index={i} />
+              <WebsiteProjectCard key={project.id} project={project} index={i} onOpen={() => setActiveProject(project)} />
             ))}
           </div>
         )}
