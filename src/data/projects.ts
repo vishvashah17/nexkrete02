@@ -21,11 +21,10 @@ export type MarketingProject = {
 export const websiteProjects: WebsiteProject[] = [
   {
     id: 1,
-    name: 'NexKreate Showcase 01',
-    description:
-      'A conversion-focused digital platform engineered with dynamic interactive UI, responsive layouts, and seamless user journeys.',
-    category: 'E-Commerce & Digital Experience',
-    url: 'https://nexkrete01.vercel.app/',
+    name: 'Panther Flow AI Labs',
+    description:'An AI-focused digital platform delivering intelligent solutions through modern technology, interactive experiences, and scalable digital innovation.',
+    category: 'AI & Technology',
+    url: 'http://pantherflow.in/',
     screenColor: '#1E3A2F',
     align: 'left',
   },
